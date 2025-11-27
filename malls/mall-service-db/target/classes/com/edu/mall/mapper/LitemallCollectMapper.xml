@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.mall.mapper.LitemallCollectMapper">
+  <resultMap id="BaseResultMap" type="com.edu.mall.pojo.LitemallCollect">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="value_id" jdbcType="INTEGER" property="valueId" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
+    <association property="litemallGoods" javaType="com.edu.mall.pojo.LitemallGoods">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="goods_sn" jdbcType="VARCHAR" property="goodsSn" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+      <result column="brand_id" jdbcType="INTEGER" property="brandId" />
+      <result column="gallery" jdbcType="VARCHAR" property="gallery" />
+      <result column="keywords" jdbcType="VARCHAR" property="keywords" />
+      <result column="brief" jdbcType="VARCHAR" property="brief" />
+      <result column="is_on_sale" jdbcType="BIT" property="isOnSale" />
+      <result column="sort_order" jdbcType="SMALLINT" property="sortOrder" />
+      <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+      <result column="share_url" jdbcType="VARCHAR" property="shareUrl" />
+      <result column="is_new" jdbcType="BIT" property="isNew" />
+      <result column="is_hot" jdbcType="BIT" property="isHot" />
+      <result column="unit" jdbcType="VARCHAR" property="unit" />
+      <result column="counter_price" jdbcType="DECIMAL" property="counterPrice" />
+      <result column="retail_price" jdbcType="DECIMAL" property="retailPrice" />
+      <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="deleted" jdbcType="BIT" property="deleted" />
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, value_id, type, add_time, update_time, deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from litemall_collect
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from litemall_collect
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.edu.mall.pojo.LitemallCollect">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into litemall_collect (user_id, value_id, type, 
+      add_time, update_time, deleted
+      )
+    values (#{userId,jdbcType=INTEGER}, #{valueId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.edu.mall.pojo.LitemallCollect">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into litemall_collect
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="valueId != null">
+        value_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="valueId != null">
+        #{valueId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.edu.mall.pojo.LitemallCollect">
+    update litemall_collect
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="valueId != null">
+        value_id = #{valueId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.edu.mall.pojo.LitemallCollect">
+    update litemall_collect
+    set user_id = #{userId,jdbcType=INTEGER},
+      value_id = #{valueId,jdbcType=INTEGER},
+      type = #{type,jdbcType=TINYINT},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select lc.id, lc.user_id, lc.value_id, lc.type, lc.add_time, lc.update_time, lc.deleted,
+           lg.id id,lg.name name,lg.retail_price retailPrice,lg.*
+    from (select *from litemall_collect lc where user_id=#{userId}) lc,litemall_goods lg
+    where lc.value_id=lg.id
+  </select>
+
+  <delete id="deleteIds">
+    delete from litemall_collect
+    <where>
+      user_id=#{userId}
+    and
+    <foreach collection="dto.ids" item="id" open="value_id in (" separator="," close=")">
+      #{id}
+    </foreach>
+    </where>
+  </delete>
+
+  <update id="updateType">
+    update litemall_collect
+    set type =#{dto.type}
+    <where>
+      user_id=#{userId}
+      and
+      <foreach collection="dto.ids" item="id" open="value_id in (" separator="," close=")">
+        #{id}
+      </foreach>
+    </where>
+  </update>
+</mapper>
